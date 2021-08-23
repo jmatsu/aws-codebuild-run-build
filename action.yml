@@ -10,6 +10,15 @@ inputs:
   buildspec-override:
     description: 'Buildspec Override'
     required: false
+  cache-override-type:
+    description: 'Cache Override. Either NO_CACHE or S3 or LOCAL.'
+    required: false
+  cache-override-location:
+    description: 'Cache Override. Location to cache.'
+    required: false
+  cache-override-modes:
+    description: 'Cache Override. Comma separated list of cache modes.'
+    required: false
   compute-type-override:
     description: 'ComputeType Override'
     required: false

@@ -169,6 +169,28 @@ function githubInputs() {
   const buildspecOverride =
     core.getInput("buildspec-override", { required: false }) || undefined;
 
+  let cacheOverride = undefined;
+
+  const cacheOverrideType =
+    core.getInput("cache-override-type", { required: false }) || undefined;
+
+  if (cacheOverrideType) {
+    const cacheOverrideLocation =
+      core.getInput("cache-override-location", { required: false }) ||
+      undefined;
+    const cacheOverrideModes = core
+      .getInput("cache-override-modes", { required: false })
+      .split(",")
+      .map((i) => i.trim())
+      .filter((i) => i !== "");
+
+    cacheOverride = {
+      type: cacheOverrideType,
+      location: cacheOverrideLocation,
+      modes: cacheOverrideModes.length > 0 ? cacheOverrideModes : undefined,
+    };
+  }
+
   const computeTypeOverride =
     core.getInput("compute-type-override", { required: false }) || undefined;
 
@@ -187,6 +209,7 @@ function githubInputs() {
     repo,
     sourceVersion,
     buildspecOverride,
+    cacheOverride,
     computeTypeOverride,
     privilegedModeOverride,
     envPassthrough,
@@ -200,6 +223,7 @@ function inputs2Parameters(inputs) {
     repo,
     sourceVersion,
     buildspecOverride,
+    cacheOverride,
     computeTypeOverride,
     privilegedModeOverride,
     envPassthrough = [],
@@ -222,6 +246,7 @@ function inputs2Parameters(inputs) {
     sourceTypeOverride,
     sourceLocationOverride,
     buildspecOverride,
+    cacheOverride,
     computeTypeOverride,
     privilegedModeOverride,
     environmentVariablesOverride,
