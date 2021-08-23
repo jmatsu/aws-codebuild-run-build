@@ -16,6 +16,8 @@ inputs:
   detach-build:
     description: 'True if you do not need to wait the build execution. Otherwise this action will wait the completion'
     required: false
+  additional-parameters:
+    description: 'Stringified JSON object that are additional request parameters sent to CodeBuild.'
 outputs:
   aws-build-id:
     description: 'The AWS CodeBuild Build ID for this build.'

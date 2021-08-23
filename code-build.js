@@ -181,6 +181,64 @@ function githubInputs() {
   const detachBuild =
     core.getInput("detach-build", { required: false }) || false;
 
+  const {
+    artifactsOverride,
+    buildStatusConfigOverride,
+    cacheOverride,
+    certificateOverride,
+    computeTypeOverride,
+    debugSessionEnabled,
+    encryptionKeyOverride,
+    environmentTypeOverride,
+    gitCloneDepthOverride,
+    gitSubmodulesConfigOverride,
+    imageOverride,
+    imagePullCredentialsTypeOverride,
+    insecureSslOverride,
+    logsConfigOverride,
+    privilegedModeOverride,
+    queuedTimeoutInMinutesOverride,
+    registryCredentialOverride,
+    reportBuildStatusOverride,
+    secondaryArtifactsOverride,
+    secondarySourcesOverride,
+    secondarySourcesVersionOverride,
+    serviceRoleOverride,
+    sourceAuthOverride,
+    timeoutInMinutesOverride,
+  } = JSON.parse(
+    core.getInput("additional-parameters", { required: false }) || "{}"
+  );
+
+  const additionalParameters = {
+    artifactsOverride,
+    buildStatusConfigOverride,
+    cacheOverride,
+    certificateOverride,
+    computeTypeOverride,
+    debugSessionEnabled,
+    encryptionKeyOverride,
+    environmentTypeOverride,
+    gitCloneDepthOverride,
+    gitSubmodulesConfigOverride,
+    // The idempotencyToken is intentionally not set.
+    // This way the GitHub events can manage the builds.
+    imageOverride,
+    imagePullCredentialsTypeOverride,
+    insecureSslOverride,
+    logsConfigOverride,
+    privilegedModeOverride,
+    queuedTimeoutInMinutesOverride,
+    registryCredentialOverride,
+    reportBuildStatusOverride,
+    secondaryArtifactsOverride,
+    secondarySourcesOverride,
+    secondarySourcesVersionOverride,
+    serviceRoleOverride,
+    sourceAuthOverride,
+    timeoutInMinutesOverride,
+  };
+
   return {
     projectName,
     owner,
@@ -189,6 +247,7 @@ function githubInputs() {
     buildspecOverride,
     envPassthrough,
     detachBuild,
+    additionalParameters,
   };
 }
 
@@ -200,6 +259,7 @@ function inputs2Parameters(inputs) {
     sourceVersion,
     buildspecOverride,
     envPassthrough = [],
+    additionalParameters = {},
   } = inputs;
 
   const sourceTypeOverride = "GITHUB";
@@ -220,6 +280,7 @@ function inputs2Parameters(inputs) {
     sourceLocationOverride,
     buildspecOverride,
     environmentVariablesOverride,
+    ...additionalParameters,
   };
 }
 
