@@ -13,6 +13,9 @@ inputs:
   compute-type-override:
     description: 'ComputeType Override'
     required: false
+  privileged-mode-override:
+    description: 'PriviledgedMode Override'
+    required: false
   env-vars-for-codebuild:
     description: 'Comma separated list of environment variables to send to CodeBuild'
     required: false

@@ -172,6 +172,9 @@ function githubInputs() {
   const computeTypeOverride =
     core.getInput("compute-type-override", { required: false }) || undefined;
 
+  const privilegedModeOverride =
+    core.getInput("privileged-mode-override", { required: false }) || undefined;
+
   const envPassthrough = core
     .getInput("env-vars-for-codebuild", { required: false })
     .split(",")
@@ -185,6 +188,7 @@ function githubInputs() {
     sourceVersion,
     buildspecOverride,
     computeTypeOverride,
+    privilegedModeOverride,
     envPassthrough,
   };
 }
@@ -197,6 +201,7 @@ function inputs2Parameters(inputs) {
     sourceVersion,
     buildspecOverride,
     computeTypeOverride,
+    privilegedModeOverride,
     envPassthrough = [],
   } = inputs;
 
@@ -218,6 +223,7 @@ function inputs2Parameters(inputs) {
     sourceLocationOverride,
     buildspecOverride,
     computeTypeOverride,
+    privilegedModeOverride,
     environmentVariablesOverride,
   };
 }
