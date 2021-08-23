@@ -13,6 +13,9 @@ inputs:
   env-vars-for-codebuild:
     description: 'Comma separated list of environment variables to send to CodeBuild'
     required: false
+  detach-build:
+    description: 'True if you do not need to wait the build execution. Otherwise this action will wait the completion'
+    required: false
 outputs:
   aws-build-id:
     description: 'The AWS CodeBuild Build ID for this build.'

@@ -21,17 +21,20 @@ function runBuild() {
   const sdk = buildSdk();
 
   // Get input options for startBuild
-  const params = inputs2Parameters(githubInputs());
+  const inputs = githubInputs();
+  const params = inputs2Parameters(inputs);
 
-  return build(sdk, params);
+  return build(sdk, inputs.detachBuild, params);
 }
 
-async function build(sdk, params) {
+async function build(sdk, detachBuild, params) {
   // Start the build
   const start = await sdk.codeBuild.startBuild(params).promise();
 
-  // Wait for the build to "complete"
-  return waitForBuildEndTime(sdk, start.build);
+  if (!detachBuild) {
+    // Wait for the build to "complete"
+    return waitForBuildEndTime(sdk, start.build);
+  }
 }
 
 async function waitForBuildEndTime(
@@ -175,6 +178,9 @@ function githubInputs() {
     .map((i) => i.trim())
     .filter((i) => i !== "");
 
+  const detachBuild =
+    core.getInput("detach-build", { required: false }) || false;
+
   return {
     projectName,
     owner,
@@ -182,6 +188,7 @@ function githubInputs() {
     sourceVersion,
     buildspecOverride,
     envPassthrough,
+    detachBuild,
   };
 }
 
